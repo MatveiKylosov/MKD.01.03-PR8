@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -47,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
     {
         setContentView(R.layout.note);
     }
+    int index = -1;
 
     public void AddNote(View view){
         notes new_notes = new notes();
         EditText e_name = findViewById(R.id.editTextTextPersonName);
-
         MultiAutoCompleteTextView e_text = findViewById(R.id.multiAutoCompleteTextView);
         new_notes.name = e_name.getText().toString();
         new_notes.text = e_text.getText().toString();
@@ -59,8 +60,12 @@ public class MainActivity extends AppCompatActivity {
         Date dateNow = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
         new_notes.date = formatForDateNow.format(dateNow);
-
-        list_nites.add(new_notes);
+        if(index == -1)
+            list_nites.add(new_notes);
+        else{
+            list_nites.set(index, new_notes);
+            index = -1;
+        }
         setContentView(R.layout.activity_main);
         onLoad();
     }
@@ -69,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     {
         int id = (int) view.getTag();
         setContentView(R.layout.note);
-
+        index = id;
         EditText e_name = findViewById(R.id.editTextTextPersonName);
         e_name.setText(list_nites.get(id).name);
 
