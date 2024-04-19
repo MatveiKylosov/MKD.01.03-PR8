@@ -63,6 +63,18 @@ public class MainActivity extends AppCompatActivity {
         onLoad();
     }
 
+    public void OpenNotes(View view)
+    {
+        int id = (int) view.getTag();
+        setContentView(R.layout.note);
+
+        EditText e_name = findViewById(R.id.editTextTextPersonName);
+        e_name.setText(list_nites.get(id).name);
+
+        MultiAutoCompleteTextView e_text = findViewById(R.id.multiAutoCompleteTextView);
+        e_text.setText(list_nites.get(id).text);
+    }
+
     public void onLoad()
     {
         LinearLayout parrent = findViewById(R.id.parrent);
@@ -77,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
             );
 
             ll.setLayoutParams(params);
+            ll.setTag(i);
+            ll.setOnClickListener(this::OpenNotes);
 
             ImageView iv = new ImageView(this);
             iv.setImageResource(R.drawable.icon);
