@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,9 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void AddNote(View view){
         notes new_notes = new notes();
-        EditText e_name = findViewById(R.id.EditTextTextPersonName);
+        EditText e_name = findViewById(R.id.editTextTextPersonName);
 
         MultiAutoCompleteTextView e_text = findViewById(R.id.multiAutoCompleteTextView);
+        new_notes.name = e_name.getText().toString();
         new_notes.text = e_text.getText().toString();
 
         Date dateNow = new Date();
@@ -78,14 +80,15 @@ public class MainActivity extends AppCompatActivity {
     public void onLoad()
     {
         LinearLayout parrent = findViewById(R.id.parrent);
-
+        parrent.removeAllViews();
         System.out.print(list_nites.size());
         for(int i = 0 ; i < list_nites.size(); i++) {
+            final int finalI = i;
             LinearLayout ll = new LinearLayout(this);
             ll.setOrientation(LinearLayout.HORIZONTAL);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.MATCH_PARENT
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
             );
 
             ll.setLayoutParams(params);
@@ -104,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
             TextView tv_name = new TextView(this);
             tv_name.setText(list_nites.get(i).name);
-            RelativeLayout.LayoutParams params_tv = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams params_tv = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
             );
 
             tv_name.setLayoutParams(params_tv);
@@ -114,15 +117,29 @@ public class MainActivity extends AppCompatActivity {
             tv_name.setTextSize(18);
 
             TextView tv_data = new TextView(this);
-            tv_data.setText(list_nites.get(i).data);
+            tv_data.setText(list_nites.get(i).date);
             tv_data.setLayoutParams(params_tv);
             tv_data.setTextColor(Color.GRAY);
+
+            // Кнопка удаления
+            Button btn_delete = new Button(this);
+            btn_delete.setText("Удалить");
+            LinearLayout.LayoutParams btn_params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            btn_delete.setLayoutParams(btn_params);
+            btn_delete.setOnClickListener(v -> {
+                list_nites.remove(list_nites.get(finalI));
+                onLoad();
+            });
 
             parrent.addView(ll);
             ll.addView(iv);
             ll.addView(ll_ver);
             ll_ver.addView(tv_name);
             ll_ver.addView(tv_data);
+            ll_ver.addView(btn_delete);  // Добавьте кнопку в вертикальный LinearLayout
         }
     }
 }

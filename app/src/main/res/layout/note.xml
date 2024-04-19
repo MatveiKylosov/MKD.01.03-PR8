@@ -47,6 +47,7 @@
             android:backgroundTint="#FFFFFF"
             android:fallbackLineSpacing="false"
             android:text="Создать"
+            android:onClick="AddNote"
             android:textColor="#F1B130" />
     </LinearLayout>
 
