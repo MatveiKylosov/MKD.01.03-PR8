@@ -66,7 +66,8 @@
         android:text="Создать"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/scrollView3"
-        tools:layout_editor_absoluteX="104dp" />
+        tools:layout_editor_absoluteX="104dp"
+        android:onClick="OpenNote"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
